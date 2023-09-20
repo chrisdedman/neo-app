@@ -1,6 +1,3 @@
-defp config_env() do
-  Mix.env
-end
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Config module.
 #
@@ -65,7 +62,7 @@ config :phoenix, :json_library, Jason
 # Get the NASA API key from the environment
 config :neoex, 
   :nasa_api_key, "9RBqzGEhRA1mYPA0etxpuL8lmYqWMV5d2JpATHue"
-
+  
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
+# import_config "#{config_env()}.exs"
