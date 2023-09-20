@@ -32,6 +32,7 @@ defmodule Neoex.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:libcluster, "~> 3.1"},
       {:phoenix, "~> 1.7.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_view, "~> 2.0"},
