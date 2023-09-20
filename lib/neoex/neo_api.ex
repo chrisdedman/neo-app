@@ -20,7 +20,7 @@ defmodule Neoex.NeoApi do
   end
 
   def process_response_body(body) do
-    {:ok, decoded} = Poison.decode(body)
+    {:ok, _decoded} = Poison.decode(body)
   end
 
   def decoder(args, context) do
