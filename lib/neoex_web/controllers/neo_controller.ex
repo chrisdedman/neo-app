@@ -2,7 +2,7 @@ defmodule NeoexWeb.NeoController do
   use NeoexWeb, :controller
 
   @base_url "https://api.nasa.gov/neo/rest/v1/feed?"
-  @nasa_api_key Application.get_env(:neo, :nasa_api_key) || "9RBqzGEhRA1mYPA0etxpuL8lmYqWMV5d2JpATHue"
+  @nasa_api_key Application.get_env(:neo, :nasa_api_key)
 
   def index(conn, %{"start_date" => start_date, "end_date" => end_date}) do
     url = @base_url <> "start_date=#{start_date}&end_date=#{end_date}&api_key=#{@nasa_api_key}"
