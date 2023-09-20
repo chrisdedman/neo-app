@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NEO Data</title>
+    <style type="text/css">
+      /* Default styles */
+      body, h1, p {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Body Styles */
+      body {
+        font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+        background-color: #cbcbcb;
+      }
+
+      /* Header Styles */
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 30px;
+      }
+
+      /* Paragraph Styles */
+      p {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      /* Table Styles */
+      table {
+        width: 960px;
+        border-collapse: collapse;
+        margin: 0 auto;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Table Header Styles */
+      th {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+      }
+
+      /* Table Data Styles */
+      td {
+        padding: 10px;
+        text-align: center;
+        white-space:nowrap;
+      }
+
+      /* Alternating Row Styles */
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      /* Hover Effect */
+      tr:hover {
+        background-color: #ddd;
+      }
+
+      /* Media query for smaller screens */
+      @media screen and (max-width: 600px) {
+        table {
+          width:100px;
+        }
+      }
+    </style>
+</head>
+<body>
+  <h1>Near Earth Object Data</h1>
+  
+  <p>Number of Asteroids Detected: <%= @element_count %></p>
+
+  <form method="GET">
+    <input type="date" name="start_date" >
+    <input type="date" name="end_date" >
+
+    <input type="submit">
+  </form>
+    
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Is Hazardous?</th>
+        <th>Close Approach</th>
+        <th>Currently Orbiting</th>
+        <th>Estimated Diameter</th>
+        <th>Relative Velocity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for asteroid <- @asteroids do %>
+        <tr>
+          <td><%= asteroid[:id] %></td>
+          <td><%= asteroid[:name] %></td>
+          <td><%= asteroid[:is_potentially_hazardous_asteroid] %></td>
+          <td><%= hd(asteroid[:close_approach_data])["close_approach_date_full"] %></td>
+          <td><%= hd(asteroid[:close_approach_data])["orbiting_body"] %></td>
+
+          <td>
+            <%= if asteroid[:estimated_diameter] && asteroid[:estimated_diameter]["meters"] do %>
+              <%= Float.round(asteroid[:estimated_diameter]["meters"]["estimated_diameter_min"], 2) %>m -
+              <%= Float.round(asteroid[:estimated_diameter]["meters"]["estimated_diameter_max"], 2) %>m
+            <% end %>
+            <br>
+            <%= if asteroid[:estimated_diameter] && asteroid[:estimated_diameter]["feet"] do %>
+              <%= Float.round(asteroid[:estimated_diameter]["feet"]["estimated_diameter_min"], 2) %>f -
+              <%= Float.round(asteroid[:estimated_diameter]["feet"]["estimated_diameter_max"], 2) %>f
+            <% end %>
+          </td>
+          <td>
+            <%= if asteroid[:close_approach_data] do %>
+              <%= Float.round(hd(asteroid[:close_approach_data])["relative_velocity"]["kilometers_per_hour"] |> String.to_float(), 2) %> km/h
+            <% end %>
+            <br>
+            <%= if asteroid[:close_approach_data] do %>
+              <%= Float.round(hd(asteroid[:close_approach_data])["relative_velocity"]["miles_per_hour"] |> String.to_float(), 2) %> miles/h
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</body>
+</html>
